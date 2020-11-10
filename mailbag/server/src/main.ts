@@ -179,8 +179,22 @@ app.delete("/contacts/:id",
   }
 );
 
+// Update a contact.
+app.put("/contacts/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    console.log("PUT /contacts/:id", inRequest.body);
+    try {
+        const contactsWorker: Contacts.Worker = new Contacts.Worker();
+        await contactsWorker.updateContact(inRequest.params.id, inRequest.body);
+        console.log("Contact updated");
+        inResponse.send("ok");
+    } catch (inError) {
+        console.log(inError);
+        inResponse.send("Error: unable to update the contact.")
+    }
+});
 
 // Start app listening.
-app.listen(80, () => {
+app.listen(8080, () => {
   console.log("MailBag server open for requests");
 });

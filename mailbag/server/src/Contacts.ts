@@ -119,5 +119,27 @@ export class Worker {
 
   } /* End deleteContact(). */
 
+  /**
+   * Update a contact.
+   *
+   * @param inID The ID of the contact to update. @param inContact The info to be updated.
+   * @return A promise that eventually resolves to the updated contact object.
+   */
+  public updateContact(inID: string, inContact: IContact): Promise<IContact> {
+    return new Promise((inResolve, inReject) => {
+        this.db.update({ _id: inID },
+            { name: inContact.name, email: inContact.email },
+            {},
+            (inError: Error | null, inNum: number) => {
+                if(inError){
+                    console.log("Error: db update method failed!", inError);
+                    inReject(inError);
+                } else {
+                    console.log("Contacts.Worker.updateContact(): Ok", inNum);
+                    inResolve();
+                }
+            });
+    });
+}
 
 } /* End class. */
