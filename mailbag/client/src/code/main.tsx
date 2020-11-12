@@ -1,4 +1,4 @@
-// Style imports.
+  // Style imports.
 import "normalize.css";
 import "../css/main.css";
 
@@ -10,14 +10,16 @@ import ReactDOM from "react-dom";
 import BaseLayout from "./components/BaseLayout";
 import * as IMAP from "./IMAP";
 import * as Contacts from "./Contacts";
+import { ImagePalette } from "material-ui/svg-icons";
 
+const baseComponent = ReactDOM.render(
+    <BaseLayout />, document.body
+);
 
-// Render the UI.
-const baseComponent = ReactDOM.render(<BaseLayout />, document.body);
-
-
-// Now go fetch the user's mailboxes, and then their contacts.
+// Display a "please wait" popup. Block UI so user cant mess with it while backend working.
 baseComponent.state.showHidePleaseWait(true);
+
+// Call server for mailboxes.
 async function getMailboxes() {
   const imapWorker: IMAP.Worker = new IMAP.Worker();
   const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
@@ -25,6 +27,7 @@ async function getMailboxes() {
     baseComponent.state.addMailboxToList(inMailbox);
   });
 }
+
 getMailboxes().then(function() {
   // Now go fetch the user's contacts.
   async function getContacts() {

@@ -5,7 +5,6 @@ import React from "react";
 import Chip from "@material-ui/core/Chip";
 import List from "@material-ui/core/List";
 
-
 /**
  * Mailboxes.
  */
@@ -24,6 +23,5 @@ const MailboxList = ({ state }) => (
   </List>
 
 ); /* Mailboxes. */
-
 
 export default MailboxList;

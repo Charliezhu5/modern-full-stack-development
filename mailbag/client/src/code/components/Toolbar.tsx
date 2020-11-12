@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import NewContactIcon from "@material-ui/icons/ContactMail";
 import NewMessageIcon from "@material-ui/icons/Email";
 
-
 /**
  * Toolbar.
  */
@@ -24,6 +23,5 @@ const Toolbar = ({ state }) => (
   </div>
 
 );
-
 
 export default Toolbar;
