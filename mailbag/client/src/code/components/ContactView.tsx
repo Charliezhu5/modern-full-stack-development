@@ -36,8 +36,28 @@ const ContactView = ({ state }) => (
       </Button>
     }
     { state.currentView === "contact" &&
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10, marginRight:10 }}
+        onClick={ () => state.showComposeMessage("contact") }>
+        Send Email
+      </Button>
+    }
+    { state.currentView === "contact" &&
       <Button variant="contained" color="primary" size="small" style={{ marginTop:10 }}
-      onClick={ () => state.showComposeMessage("contact") }>Send Email</Button>
+        onClick={ state.editContact }>
+        Edit
+      </Button>
+    }
+    { state.currentView === "contactEdit" &&
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10, marginRight:10 }}
+        onClick={ state.cancelEditContact }>
+        Cancel
+      </Button>
+    }
+    { state.currentView === "contactEdit" &&
+      <Button variant="contained" color="primary" size="small" style={{ marginTop:10 }}
+        onClick={ state.updateContact }>
+        Update
+      </Button>
     }
 
   </form>

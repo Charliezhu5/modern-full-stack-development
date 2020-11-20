@@ -27,7 +27,7 @@ app.use("/", express.static(path.join(__dirname, "../../client/dist")));
 // Enable CORS so that we can call the API even from anywhere.
 app.use(function(inRequest: Request, inResponse: Response, inNext: NextFunction) {
   inResponse.header("Access-Control-Allow-Origin", "*");
-  inResponse.header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS");
+  inResponse.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   inResponse.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept");
   inNext();
 });
@@ -187,7 +187,7 @@ app.put("/contacts/:id",
         const contactsWorker: Contacts.Worker = new Contacts.Worker();
         await contactsWorker.updateContact(inRequest.params.id, inRequest.body);
         console.log("Contact updated");
-        inResponse.send("ok");
+        inResponse.json(inRequest.body);
     } catch (inError) {
         console.log(inError);
         inResponse.send("Error: unable to update the contact.")

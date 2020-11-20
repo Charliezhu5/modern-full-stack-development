@@ -25,7 +25,7 @@ export function createState(inParentComponent) {
     // List of messages in the current mailbox.
     messages : [ ],
 
-    // The view that is currently showing ("welcome", "message", "compose", "contact" or "contactAdd").
+    // The view that is currently showing ("welcome", "message", "compose", "contact", "contactEdit" or "contactAdd").
     currentView : "welcome",
 
     // The currently selected mailbox, if any.
@@ -44,6 +44,8 @@ export function createState(inParentComponent) {
     contactName : null,
     contactEmail : null,
 
+    // Contact info cache, for reversing while canceling and edit task.
+    contactCache : { },
 
     // ------------------------------------------------------------------------------------------------
     // ------------------------------------ View Switch functions -------------------------------------
@@ -88,6 +90,46 @@ export function createState(inParentComponent) {
       this.setState({ currentView : "contactAdd", contactID : null, contactName : "", contactEmail : "" });
 
     }.bind(inParentComponent), /* End showAddContact(). */
+
+
+    /**
+     * Show ContactView in edit mode.
+     */
+    editContact : function(): void {
+      
+      const inContact: Contacts.IContact = {
+        _id: this.state.contactID,
+        name: this.state.contactName,
+        email: this.state.contactEmail
+      }
+      console.log("state.editContact()", inContact);
+
+      this.setState({
+        currentView : "contactEdit",
+        contactCache : inContact
+      });
+
+    }.bind(inParentComponent), /* End editContact(). */
+
+    /**
+     * Cancel edit and reverse everything back to previous ContactView, using contactCache.
+     */
+    cancelEditContact : function(): void {
+
+      console.log("state.cancelEditContact()", this.state.contactCache);
+
+      const id: number = this.state.contactCache._id;
+      const name: string = this.state.contactCache.name;
+      const email: string = this.state.contactCache.email;
+
+      this.setState({
+        currentView : "contact",
+        contactID : id,
+        contactName : name,
+        contactEmail : email,
+        contactCache : { }
+      })
+    }.bind(inParentComponent), /* End cancel edit. */
 
 
     /**
@@ -342,6 +384,36 @@ export function createState(inParentComponent) {
       this.setState({ contacts : cl, contactID : null, contactName : "", contactEmail : "" });
 
     }.bind(inParentComponent), /* End deleteContact(). */
+
+    /**
+     * Update contact.
+     */
+    updateContact : async function(): Promise<void> {
+
+      console.log("state.updateContact()", this.state.contactID);
+
+      // Send PUT http request to server.
+      this.state.showHidePleaseWait(true);
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      const contact: Contacts.IContact =
+        await contactsWorker.updateContact(
+          this.state.contactID,
+          { name : this.state.contactName, email : this.state.contactEmail }
+        );
+      this.state.showHidePleaseWait(false);
+
+      // Update the list.
+      const cl = this.state.contacts.filter((inElement) => inElement._id != this.state.contactID);
+      cl.push({_id : this.state.contactID, name : this.state.contactName, email : this.state.contactEmail})
+
+      // Set state.
+      this.setState({
+        contacts: cl,
+        currentView: "contact",
+        contactCache: {}
+      })
+
+    }.bind(inParentComponent), /* End updateContact(). */
 
 
     /**

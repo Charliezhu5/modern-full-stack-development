@@ -40,7 +40,7 @@ class BaseLayout extends Component {
                     { (this.state.currentView === "message" || this.state.currentView === "compose") &&
                         <MessageView state={ this.state } />
                     }
-                    { (this.state.currentView === "contact" || this.state.currentView === "contactAdd") &&
+                    { this.state.currentView.includes("contact") &&
                         <ContactView state={ this.state } />
                     }
                     </div>
