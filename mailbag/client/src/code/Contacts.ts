@@ -18,24 +18,24 @@ export class Worker {
 
     public async listContacts(): Promise<IContact[]> {
         const response: AxiosResponse =
-            await axios.get(`${config.serverAddress}/contacts`);
+            await axios.get(`${config.serverAddress}contacts`);
         return response.data;
     }
 
     public async addContact(inContact: IContact): Promise<IContact> {
         const response: AxiosResponse = 
-            await axios.post(`${config.serverAddress}/contacts`, inContact);
+            await axios.post(`${config.serverAddress}contacts`, inContact);
         return response.data;
     }
 
     public async deleteContact(inID): Promise<void> {
         const response: AxiosResponse = 
-            await axios.delete(`${config.serverAddress}/contacts/${inID}`);
+            await axios.delete(`${config.serverAddress}contacts/${inID}`);
     }
 
     public async updateContact(inID, inContact: IContact): Promise<IContact> {
         const response: AxiosResponse = 
-            await axios.put(`${config.serverAddress}/contacts/${inID}`, inContact);
+            await axios.put(`${config.serverAddress}contacts/${inID}`, inContact);
         return response.data;
     }
 }

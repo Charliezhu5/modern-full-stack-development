@@ -195,6 +195,6 @@ app.put("/contacts/:id",
 });
 
 // Start app listening.
-app.listen(8080, () => {
-  console.log("MailBag server open for requests");
+app.listen(process.env.PORT, () => {
+  console.log("MailBag server open for requests on port:", process.env.PORT);
 });

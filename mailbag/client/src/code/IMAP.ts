@@ -23,7 +23,7 @@ export class Worker {
 
         console.log("IMAP.Worker.listMailboxes()");
 
-        const response: AxiosResponse = await axios.get(`${config.serverAddress}/mailboxes`);
+        const response: AxiosResponse = await axios.get(`${config.serverAddress}mailboxes`);
         return response.data;
 
     } /* End listMailboxes(). */
@@ -33,7 +33,7 @@ export class Worker {
 
         console.log("IMAP.Worker.listMessages()");
 
-        const response: AxiosResponse = await axios.get(`${config.serverAddress}/mailboxes/${inMailbox}`);
+        const response: AxiosResponse = await axios.get(`${config.serverAddress}mailboxes/${inMailbox}`);
         return response.data;
 
     } /* End listMessages(). */
@@ -43,7 +43,7 @@ export class Worker {
 
         console.log("IMAP.Worker.getMessageBody()", inID);
 
-        const response: AxiosResponse = await axios.get(`${config.serverAddress}/messages/${inMailbox}/${inID}`);
+        const response: AxiosResponse = await axios.get(`${config.serverAddress}messages/${inMailbox}/${inID}`);
         return response.data;
 
     } /* End getMessageBody(). */
@@ -53,7 +53,7 @@ export class Worker {
 
         console.log("IMAP.Worker.getMessageBody()", inID);
 
-        await axios.delete(`${config.serverAddress}/messages/${inMailbox}/${inID}`);
+        await axios.delete(`${config.serverAddress}messages/${inMailbox}/${inID}`);
 
     } /* End deleteMessage(). */
 } /* End class. */

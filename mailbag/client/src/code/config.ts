@@ -1,5 +1,5 @@
-export const config: { serverAddress: string, userEmail: string } =
+export const config: { serverAddress, userEmail } =
 {
-    serverAddress : "http://localhost:8080",
-    userEmail : "charliezhu5@outlook.com"
+    serverAddress : document.URL, 
+    userEmail : 'charliezhu5@outlook.com'
 };

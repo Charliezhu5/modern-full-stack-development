@@ -16,7 +16,7 @@ export class Worker {
 
         console.log("SMTP.Worker.sendMessage()");
 
-        await axios.post(`${config.serverAddress}/messages`, {
+        await axios.post(`${config.serverAddress}messages`, {
             to : inTo,
             from : inFrom,
             subject : inSubject,
