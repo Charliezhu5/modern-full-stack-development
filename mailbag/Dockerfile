@@ -1,7 +1,6 @@
 FROM arm64v8/node:10-alpine
 WORKDIR /usr/src/app
 COPY /server/package*.json ./
-COPY /server/serverInfo.json ./server/
 COPY /server/dist ./server/dist
 COPY /client/dist ./client/dist
 RUN npm install --only=prod
